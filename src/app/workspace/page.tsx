@@ -54,6 +54,7 @@ import {
     FacialExpressionSignal,
     EyeExpressionSignal
 } from "./_signals"
+import TerminalUI from "./_components/TerminalUI"
 
 // Available signals data
 const availableSignals = [
@@ -114,6 +115,7 @@ const WorkspacePage = () => {
         { id: '3', signalId: null },
         { id: '4', signalId: null },
     ])
+    const [showTerminal, setShowTerminal] = useState(false)
 
     const handleAnnotationSelect = (annotationId: string) => {
         console.log('Selected annotation:', annotationId)
@@ -275,6 +277,24 @@ const WorkspacePage = () => {
                             <p>Settings</p>
                         </TooltipContent>
                     </Tooltip>
+
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button
+                                variant={showTerminal ? "default" : "outline"}
+                                size="sm"
+                                onClick={() => setShowTerminal(v => !v)}
+                            >
+                                <span className="flex items-center gap-2">
+                                    <span className="material-symbols-outlined">terminal</span>
+                                    Terminal
+                                </span>
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>Toggle Terminal</p>
+                        </TooltipContent>
+                    </Tooltip>
                 </div>
 
                 {/* Main Content */}
@@ -385,6 +405,11 @@ const WorkspacePage = () => {
                                 ))}
                             </div>
                         </div>
+                        {showTerminal && (
+                            <div className="border-t bg-black text-white h-full w-full" style={{ height: 350, minHeight: 350, maxHeight: 350 }}>
+                                <TerminalUI />
+                            </div>
+                        )}
                     </div>
 
                     {/* Right Sidebar - Signals Panel */}
